@@ -104,8 +104,10 @@ int EncontraValorMaximo(int capacidade, int qtdeObjetos, objeto *objetos)
 
     // Envia pro nó zero o valorMaximo
     if(rank != 0)
+	printf("Envio pro rank 0 para %d", rank);
 	ret = MPI_Send(&valorMaximo, 1, MPI_INT, 0, tag, MPI_COMM_WORLD);
     else {
+	prinft("entrou rank 0");
 	loop = 1; // pula o nó 0
 	valorDoLoop = 0;
 	valorParalelo = 0;
