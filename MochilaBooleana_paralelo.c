@@ -66,9 +66,10 @@ int main(int argc, char *argv[])
     inicio = clock();
     valorMaximo = EncontraValorMaximo(capacidade, qtdeObjetos, objetos);
     fim = clock();
-
-    printf("\nValor maximo suportado: %d", valorMaximo);
-    printf("\nTempo gasto em milissegundos: %g", ((double)(fim - inicio)) * 1000.0 / CLOCKS_PER_SEC);
+	if(rank == 0){
+	    printf("\nValor maximo suportado: %d", valorMaximo);
+	    printf("\nTempo gasto em milissegundos: %g", ((double)(fim - inicio)) * 1000.0 / CLOCKS_PER_SEC);
+	}
 
     getchar();
 }
