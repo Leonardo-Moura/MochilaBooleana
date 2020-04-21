@@ -65,15 +65,16 @@ int main(int argc, char *argv[])
     
     inicio = clock();
     valorMaximo = EncontraValorMaximo(capacidade, qtdeObjetos, objetos);
-    valorMaximo = SincronizaValorMaximoEntreUnidadesDeProcessamento(valorMaximo);
     fim = clock();
-    
+
+    valorMaximo = SincronizaValorMaximoEntreUnidadesDeProcessamento(valorMaximo);
 	if(GetIdDaUnidadeDeProcessamento() == 0){
 	    printf("\nValor maximo suportado: %d", valorMaximo);
 	    printf("\nTempo gasto em milissegundos: %g", ((double)(fim - inicio)) * 1000.0 / CLOCKS_PER_SEC);
+	    printf("\n\n");
 	}
 
-    getchar();
+	MPI_Finalize();
 }
 
 int EncontraValorMaximoDeFormaDistribuida(int capacidade, int qtdeObjetos, objeto *objetos)
@@ -123,7 +124,7 @@ int RecebeValoresMaximosDeMaquinasSlave()
 {
     int valorMaximo = 0, valorDoLoop = 0, loop;
 
-    for (loop = 1; loop < getNumeroDeUnidadesDeProcessamento(), loop++)
+    for (loop = 1; loop < getNumeroDeUnidadesDeProcessamento(); loop++)
     {
         MPI_Recv(&valorDoLoop, 1, MPI_INT, loop, TAG, MPI_COMM_WORLD, NULL);
 
@@ -185,14 +186,14 @@ int AbreArquivo(FILE **dados)
     FILE *arquivo;
     if ((arquivo = fopen("dados.txt", "r")) == NULL)
     {
-        printaCabecalhoErro();
+        PrintaCabecalhoErro();
         printf("Nao foi possivel abrir o arquivo 'dados.txt'.");
         return FALSE;
     }
 
     if(feof(arquivo))
     {
-        printaCabecalhoErro();
+        PrintaCabecalhoErro();
         printf("Arquivo 'dados.txt' vazio.");
         return FALSE;
     }
@@ -235,7 +236,7 @@ int LeInteiro(FILE *dados)
     memset(linha, 0, sizeof(char) * TAM_LINHA);
     if (fgets(linha, TAM_LINHA, dados) == NULL)
     {
-        printaCabecalhoErro();
+        PrintaCabecalhoErro();
         printf("Erro ao carregar valor do arquivo.");
         return ERRO;
     }
@@ -254,7 +255,7 @@ objeto* LeObjetos(int qtdeObjetos, FILE *dados)
     {
         if (loop >= qtdeObjetos)
         {
-            printaCabecalhoErro();
+            PrintaCabecalhoErro();
             printf("Existem mais objetos do que o informado no totalizador.");
             free(objetos);
             return NULL;
@@ -264,7 +265,7 @@ objeto* LeObjetos(int qtdeObjetos, FILE *dados)
 
         if (objetos[loop].peso == 0 || objetos[loop].valor == 0)
         {
-            printaCabecalhoErro();
+            PrintaCabecalhoErro();
             printf("Erro ao ler objeto na linha %d", loop + 3);
             free(objetos);
             return NULL;

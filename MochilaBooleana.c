@@ -55,8 +55,7 @@ int main()
 
     printf("\nValor maximo suportado: %d", valorMaximo);
     printf("\nTempo gasto em milissegundos: %g", ((double)(fim - inicio)) * 1000.0 / CLOCKS_PER_SEC);
-
-    getchar();
+    printf("\n\n");
 }
 
 int EncontraValorMaximo(int capacidade, int qtdeObjetos, objeto *objetos)
