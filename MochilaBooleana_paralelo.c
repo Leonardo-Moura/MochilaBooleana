@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     PrintaInformacoesDoArquivo(capacidade, qtdeObjetos);
     
     inicio = clock();
-    valorMaximo = EncontraValorMaximo(capacidade, qtdeObjetos, objetos);
+    valorMaximo = EncontraValorMaximoDeFormaDistribuida(capacidade, qtdeObjetos, objetos);
     fim = clock();
 
     valorMaximo = SincronizaValorMaximoEntreUnidadesDeProcessamento(valorMaximo);
